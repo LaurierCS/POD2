@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 #CONFIG
-st.button(label="LOGIN/SIGNUP", help="LOGIN/SIGNUP")
+col1, col2, col3 = st.columns(3)
+with col3:
+    st.button(label="LOGIN/SIGNUP", help="LOGIN/SIGNUP")
 
 
 add_selectbox = st.sidebar.page_link("homepage.py", label="Dashboard", icon="🏠")
