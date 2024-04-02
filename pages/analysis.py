@@ -10,12 +10,10 @@ add_selectbox = st.sidebar.page_link("pages/settings.py", label="Settings", icon
 tab1, tab2 = st.tabs(["Financials", "Earnings"])
 chart_data = df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
 
-with st.container():
-    st.title("AAPL DATA")
 with tab1:
    col1, col2 = st.columns(2)
    with col1:
-    st.header("Financials")
+    st.header("AAPL data")
     with col2:
       st.metric("Last Close", "171.48", "-1.83 (1.06%)")
    fig = go.Figure()
