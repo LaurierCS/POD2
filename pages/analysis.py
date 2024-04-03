@@ -3,6 +3,10 @@ import pandas as pd
 import plotly.graph_objects as go
 from stocks.alphavantage import Model
 
+add_selectbox = st.sidebar.page_link("homepage.py", label="Dashboard", icon="🏠")
+add_selectbox = st.sidebar.page_link("pages/analysis.py", label="Analysis", icon="📈")
+add_selectbox = st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
 symbol = ''
 months = 0
 valid = False
@@ -21,9 +25,6 @@ def search():
       st.error("Symbol not found. Please enter a valid stock symbol")
       return [], []
 
-add_selectbox = st.sidebar.page_link("homepage.py", label="Dashboard", icon="🏠")
-add_selectbox = st.sidebar.page_link("pages/analysis.py", label="Analysis", icon="📈")
-add_selectbox = st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
 text_input = st.text_input("Enter the stock symbol here:")
 number_input = st.number_input("Enter the number of months to predict:", min_value=1, max_value=24, step=1)
@@ -33,7 +34,7 @@ if button_clicked:
     dates, forecast_values = search()
     if valid:
         tab1, tab2 = st.tabs(["Forecast", "Predictions"])
-        chart_data = df = pd.read_csv(f'./stocks/{symbol}.csv')
+        chart_data = df = pd.read_csv(f'./stocks\{symbol}.csv')
 
         with tab1:
             col1, col2 = st.columns(2)
@@ -50,5 +51,5 @@ if button_clicked:
     if valid:
         with tab2:
             st.header("Data")
-            earnings_data = pd.read_csv(f"./stocks/{symbol}.csv")  
+            earnings_data = pd.read_csv(f"./stocks\{symbol}.csv")  
             st.table(earnings_data)
