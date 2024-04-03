@@ -21,6 +21,7 @@ with tab1:
                         open=df['AAPL.Open'], high=df['AAPL.High'],
                         low=df['AAPL.Low'], close=df['AAPL.Close'])
                             )
+                        
    st.plotly_chart(fig)
    
 
@@ -28,4 +29,4 @@ with tab1:
 with tab2:
    st.header("Earnings")
    earnings_data = pd.read_csv("./aapldata.csv")
-   st.table(earnings_data)
+   st.dataframe(earnings_data, use_container_width=True)
