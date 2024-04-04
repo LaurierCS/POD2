@@ -20,7 +20,8 @@
 - 
 
 ### Setup
-
+```sh
+$
 # Windows command prompt
 .venve\Scripts\activate.bat
 
@@ -31,7 +32,5 @@
 source .venve/bin/activate
 
 streamlit run homepage.py
-```sh
-$
 ```
 
