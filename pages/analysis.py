@@ -35,18 +35,18 @@ if button_clicked:
     dates, forecast_values = search()
     if valid:
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Forecast", "Predictions", "Income Statement", "Balance Sheet", "Cash Flow", "Earnings"])
-        chart_data = df = pd.read_csv(f'./stocks\{symbol}.csv')
-
+        chart_data = df = pd.read_csv(f'./stocks\{symbol}.csv', parse_dates=['date'])
+        df.set_index('date', inplace=True)
         with tab1:
             col1, col2 = st.columns(2)
             with col1:
                st.header(f"{symbol} Forecast for the Next {months} Months")
                fig = go.Figure()
-               fig.add_trace(go.Scatter(x=dates, y=forecast_values['open'], mode='lines', name='Open Price'))
+               fig.add_trace(go.Scatter(x=df.index, y=forecast_values['open'], mode='lines', name='Open Price'))
                min_open = forecast_values['open'].min()
                max_open = forecast_values['open'].max()
                y_range = [min_open * 0.9, max_open * 1.1]  
-               fig.update_layout(yaxis_range=y_range)
+               fig.update_layout(yaxis_range=y_range, yaxis_title='Open Price')
                st.plotly_chart(fig)
 
     if valid:
