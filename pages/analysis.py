@@ -70,3 +70,19 @@ if button_clicked:
             st.dataframe(balance_data["annualReports"])
             st.header("Quarterly Reports")
             st.dataframe(balance_data["quarterlyReports"])
+    if valid:
+        with tab5:
+            with open(f"stocks\{symbol}_cashflow.json", 'r') as f:
+                cashflow_data = json.load(f)
+            st.header("Annual Reports")
+            st.dataframe(cashflow_data["annualReports"])
+            st.header("Quarterly Reports")
+            st.dataframe(cashflow_data["quarterlyReports"])
+    if valid:
+        with tab6:
+            with open(f"stocks\{symbol}_earnings.json", 'r') as f:
+                earnings_data = json.load(f)
+            st.header("Annual Earnings")
+            st.dataframe(earnings_data["annualEarnings"])
+            st.header("Quarterly Earnings")
+            st.dataframe(earnings_data["quarterlyEarnings"])

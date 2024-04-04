@@ -103,7 +103,7 @@ class Model:
     
     def get_balance(symbol):
         if os.path.isfile(f'{Model.CURRENT_DIR}\{symbol}_balance.json'):
-            with open(f'{Model.CURRENT_DIR}\{symbol}_income.json') as f:
+            with open(f'{Model.CURRENT_DIR}\{symbol}_balance.json') as f:
                 data = json.load(f)
                 return data
         else:
@@ -129,7 +129,64 @@ class Model:
                     return 200
         else:
             return r.status_code
+    def get_cashflow(symbol):
+        if os.path.isfile(f'{Model.CURRENT_DIR}\{symbol}_cashflow.json'):
+            with open(f'{Model.CURRENT_DIR}\{symbol}_cashflow.json') as f:
+                data = json.load(f)
+                return data
+        else:
+            print('File does not exist\nfetching data...')
+            r = Model.get_cashflow_data(symbol)
+            if r != 200:
+                print('Failed to create file')
+                print(r)
+                return [], []
+            else:
+                print('Successfully created file')
+                return Model.get_cashflow(symbol)
+            
+    def get_cashflow_data(symbol):
+        request = f'https://www.alphavantage.co/query?function=CASH_FLOW&symbol={symbol}&apikey=9M4TJBS45SVG391Z'
+        r = requests.get(request)
+        if r.status_code == 200:
+            stock_data = r.json()
+            if 'Error Message' in stock_data:
+                return 400
+            else:
+                with open(f'{Model.CURRENT_DIR}\{symbol}_cashflow.json', 'w') as f:
+                    json.dump(stock_data, f, ensure_ascii=False, indent=4)
+                    return 200
+        else:
+            return r.status_code
     
+    def get_earnings(symbol):
+        if os.path.isfile(f'{Model.CURRENT_DIR}\{symbol}_earnings.json'):
+            with open(f'{Model.CURRENT_DIR}\{symbol}_earnings.json') as f:
+                data = json.load(f)
+                return data
+        else:
+            print('File does not exist\nfetching data...')
+            r = Model.get_earnings_data(symbol)
+            if r != 200:
+                print('Failed to create file')
+                print(r)
+                return [], []
+            else:
+                print('Successfully created file')
+                return Model.get_earnings(symbol)
+    def get_earnings_data(symbol):
+        request = f'https://www.alphavantage.co/query?function=EARNINGS&symbol={symbol}&apikey=9M4TJBS45SVG391Z'
+        r = requests.get(request)
+        if r.status_code == 200:
+            stock_data = r.json()
+            if 'Error Message' in stock_data:
+                return 400
+            else:
+                with open(f'{Model.CURRENT_DIR}\{symbol}_earnings.json', 'w') as f:
+                    json.dump(stock_data, f, ensure_ascii=False, indent=4)
+                    return 200
+        else:
+            return r.status_code
 
 
     def create_plot(symbol, prediction_amount):
@@ -171,6 +228,8 @@ class Model:
         dates, values = Model.get_values(symbol)
         income = Model.get_income(symbol)
         balance = Model.get_balance(symbol)
+        cashflow = Model.get_cashflow(symbol)
+        earnings = Model.get_earnings(symbol)
         if len(dates) > 0 and len(values) > 0:
             data_frame, dates = Model.create_stock_data_frame(dates, values)
             model.fit(data_frame)    
