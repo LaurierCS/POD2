@@ -69,12 +69,8 @@ add_selectbox = st.sidebar.page_link("pages/settings.py", label="Settings", icon
 cols2 = st.columns(5)
 with cols2[4]:
      st.button(label="LOGIN/SIGNUP", help="LOGIN/SIGNUP")
-choice = ui.select(options=["‎","AAPL","MSFT", "YTSL", "GOOG"])
 st.header("TOP GAINERS")
 gainercolumn = st.columns(3)
-if choice == "AAPL":
-     st.switch_page("pages/analysis.py")
-
 
 with gainercolumn[0]:
     ui.metric_card(title=top1, content=top1price, description="+" + top1pricechange + " (+" + top1change + ")", key="card1")
