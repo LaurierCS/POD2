@@ -21,7 +21,6 @@
 
 ### Setup
 ```sh
-$
 # Windows command prompt
 .venve\Scripts\activate.bat
 
@@ -31,6 +30,7 @@ $
 # macOS and Linux
 source .venve/bin/activate
 
+#then run this command after in virtual environment
 streamlit run homepage.py
 ```
 
